@@ -13,6 +13,7 @@ db.once('open', function(callback){
 
 var app=express()
 
+let userId;
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -42,7 +43,55 @@ db.collection('users').insertOne(data,function(err, collection){
 			
 	});
 		
-	return res.redirect('signup_success.html');
+	return res.redirect('login.html');
+})
+
+
+app.post('/bookslot', function(req,res){
+	console.log(req.body);
+	var firstDoze = req.body.firstDoze;
+    var secondDoze = req.body.secondDoze;
+    var timeSlot = req.body.timeSlot;
+	let first,second;
+    if(firstDoze == "on"){
+		first = true
+	}else{
+		first=false
+	}
+    if(secondDoze == "on"){
+		second = true
+	}else{
+		second=false
+	}
+
+	var data = {
+		"userId": userId,
+		"firstDoze":first,
+        "secondDose":second,  
+	}
+db.collection('vaccinedozes').insertOne(data,function(err, collection){
+		if (err) throw err;
+		console.log("Record inserted Successfully");
+		// alert("Succesfully Booked Slot")
+
+
+		db.collection('vaccine').updateOne({timeSlot:timeSlot},{$inc:{count:-1}},function(err, collection){
+			if (err) throw err;
+			console.log("Record inserted Successfully");
+			// alert("Succesfully Booked Slot")
+				
+		});
+
+			
+	});
+
+
+
+		
+	return res.redirect('bookslot.html');
+
+
+
 })
 
 
@@ -66,6 +115,7 @@ app.post("/login", async(req,res)=>
 	
 			if(userPhoneNumber.password === password)
 			{
+				userId = phone;
 				res.send("login succesfully");
 			}
 			else{
