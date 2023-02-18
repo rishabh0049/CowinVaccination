@@ -4,7 +4,7 @@ var bodyParser=require("body-parser");
 const mongoose = require('mongoose');
 
 const { defaultMaxListeners } = require("events");
-mongoose.connect('mongodb://localhost:27017/gfg');
+mongoose.connect('mongodb://localhost:27017/cowinvaccination');
 var db=mongoose.connection;
 db.on('error', console.log.bind(console, "connection error"));
 db.once('open', function(callback){
@@ -36,7 +36,7 @@ app.post('/sign_up', function(req,res){
 		"password":pass,
 		"phone":phone
 	}
-db.collection('details').insertOne(data,function(err, collection){
+db.collection('users').insertOne(data,function(err, collection){
 		if (err) throw err;
 		console.log("Record inserted Successfully");
 			
@@ -60,7 +60,7 @@ app.post("/login", async(req,res)=>
 		try{
 			const phone = req.body.phone;
 			const password = req.body.password;
-			const userPhoneNumber = await db.collection("details").findOne({phone:phone});
+			const userPhoneNumber = await db.collection("users").findOne({phone:phone});
 	
 			console.log(phone,password,userPhoneNumber);
 	

@@ -1,6 +1,5 @@
-const daysTag = document.querySelector(".days"),
-currentDate = document.querySelector(".current-date"),
-prevNextIcon = document.querySelectorAll(".icons span");
+const daysTag = document.querySelector(".days")
+const slotHeading = document.querySelector(".sloth4")
 
 // getting new date, current year and month
 let date = new Date(),
@@ -27,6 +26,6 @@ renderCalendar();
 
 function funcc( curr)
 {
-    console.log(curr);
+    slotHeading.innerHTML = `<h4> Book Your Slot for ${curr} June</h4>`
 }
 
