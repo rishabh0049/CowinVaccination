@@ -112,6 +112,7 @@ header .current-date{
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
+  color:green;
   width: 148px;
   display: flex;
   justify-content: center;

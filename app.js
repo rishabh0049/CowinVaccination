@@ -12,6 +12,13 @@ db.once("open", function (callback) {
   console.log("connection succeeded");
 });
 
+if(typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  localStorage = new LocalStorage('./scratch');
+}
+
+
+
 var app = express();
 
 let userId;
@@ -53,6 +60,7 @@ app.post("/bookslot", function (req, res) {
   var firstDoze = req.body.firstDoze;
   var secondDoze = req.body.secondDoze;
   var timeSlot = req.body.timeSlot;
+  timeSlot = timeSlot.split(" ").join("")
   let first, second;
   if (firstDoze == "on") {
     first = true;
@@ -65,22 +73,18 @@ app.post("/bookslot", function (req, res) {
     second = false;
   }
 
-  console.log("before if");
   // if(first==true){
-  console.log("one");
+  userId = localStorage.getItem('user')
   db.collection("vaccinedozes").findOne(
     { userId: userId },
     function (err, result) {
       if (err) throw err;
-      console.log(result);
       if (result) {
-        console.log("HI");
-        console.log(second);
-        if (second == true) {
-          console.log("ttwwoo");
+        if (first == true && second == false) {
+          userId= localStorage.getItem('user')
           db.collection("vaccinedozes").updateOne(
             { userId: userId },
-            { $set: { firstDoze: true, secondDose: second } },
+            { $set: { firstDoze: first, secondDoze: second,timeSlotFirst:timeSlot } },
             function (err, collection) {
               if (err) throw err;
               console.log("Updated Successfully");
@@ -96,11 +100,38 @@ app.post("/bookslot", function (req, res) {
             }
           );
         }
-      } else {
+        
+        if(first == true && second == true){
+          
+          userId= localStorage.getItem('user')
+          db.collection("vaccinedozes").updateOne(
+            { userId: userId },
+            { $set: { firstDoze: first, secondDoze: second,timeSlotSecond:timeSlot } },
+            function (err, collection) {
+              if (err) throw err;
+              console.log("Updated Successfully");
+
+              db.collection("vaccine").updateOne(
+                { timeSlot: timeSlot },
+                { $inc: { count: -1 } },
+                function (err, collection) {
+                  if (err) throw err;
+                  console.log("Record inserted Successfully");
+                }
+              );
+            }
+          );
+        }
+      } 
+      
+      else {
+        userId= localStorage.getItem('user')
         var data = {
           userId: userId,
           firstDoze: first,
-          secondDose: false,
+          secondDoze: false,
+          timeSlotFirst:timeSlot
+          // name:userName
         };
         db.collection("vaccinedozes").insertOne(
           data,
@@ -150,7 +181,6 @@ app.get("/login", (req, res) => {
 // })
 
 app.post("/login", async (req, res) => {
-  console.log("Entry 1");
 
   try {
     const phone = req.body.phone;
@@ -159,10 +189,13 @@ app.post("/login", async (req, res) => {
       .collection("users")
       .findOne({ phone: phone });
 
-    console.log(phone, password, userPhoneNumber);
 
     if (userPhoneNumber.password === password) {
       userId = phone;
+      
+      
+      localStorage.setItem('user', phone);
+
       res.redirect("bookslot.html");
     } else {
       res.send("Inavlid Login Details");
@@ -174,6 +207,7 @@ app.post("/login", async (req, res) => {
 
 app.get("/getvaccinedozes", function (req, res) {
   let userDocument;
+  userId = localStorage.getItem('user')
   db.collection("vaccinedozes").findOne(
     { userId: userId },
     function (err, result) {
