@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login</title>
+    <title>Admin Login</title>
 
     <link
       rel="stylesheet"
@@ -11,8 +11,17 @@
     />
 
     <link rel="stylesheet" type="text/css" href="login.css" />
+    <style>
+
+        body{
+            background-image: url("https://images.unsplash.com/photo-1611694599979-3a4e8a1bc49b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+            background-repeat: no-repeat;
+            background-size: cover;
+       
+        }
+    </style>
   </head>
-  <body>
+  <body >
     <br />
     <br />
     <br />
@@ -21,14 +30,14 @@
         <div class="col-md-3"></div>
 
         <div class="col-md-6 main">
-          <form action="/login" method="post">
-            <h1>Login for User</h1>
+          <form action="/adminlogin" method="post">
+            <h1>Login for Admin</h1>
 
             <input
               class="box"
               type="text"
-              name="phone"
-              id="phone"
+              name="phoneAdmin"
+              id="phoneAdmin"
               placeholder="Phone Number "
               required
             /><br />
@@ -37,8 +46,8 @@
             <input
               class="box"
               type="password"
-              name="password"
-              id="password"
+              name="passwordAdmin"
+              id="passwordAdmin"
               placeholder="Password "
               required
             /><br />
@@ -51,10 +60,8 @@
             /><br />
           </form>
 		  <div class="loginFooter">
-			Don't have an account? &nbsp;<a href="signup.html">Sign up</a>
-    </div>
-    <a class="admin" href="adminlogin.html">Login for Admin</a>
-  </div>
+		  </div>
+        </div>
 
         <div class="col-md-3"></div>
       </div>

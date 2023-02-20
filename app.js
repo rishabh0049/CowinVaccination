@@ -180,6 +180,49 @@ app.get("/login", (req, res) => {
 // 	res.send("loginhtml");
 // })
 
+app.get("/adminlogin", (req, res) => {
+  res.redirect("adminlogin.html");
+});
+
+
+app.post("/adminlogin",async (req,res)=>
+{
+  console.log(req.body);
+  try
+  {
+    const phoneAdmin = req.body.phoneAdmin;
+    const passwordAdmin = req.body.passwordAdmin;
+    console.log(phoneAdmin,passwordAdmin)
+    const userPhoneNumberAdmin = await db.collection("admin")
+      .findOne({ phoneAdmin:phoneAdmin });
+
+
+      console.log(userPhoneNumberAdmin)
+    if (userPhoneNumberAdmin.passwordAdmin === passwordAdmin) {
+      res.redirect("admindashboard.html");
+    }
+
+      else {
+        res.send("Inavlid Login Details");
+      }
+  
+ }
+
+ catch (err) {
+  console.log(err);
+}
+ 
+ }
+);
+
+
+app.get("/getvaccineusers",async (req,res) => {
+  await db.collection("vaccinedozes").find({}).toArray(function(err, result) {
+    if (err) throw err;
+    res.send(result)
+  });
+});
+
 app.post("/login", async (req, res) => {
 
   try {

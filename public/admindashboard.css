@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url("https://img.freepik.com/free-vector/vaccination-realistic-design-concept_1284-69323.jpg?w=1060&t=st=1676883294~exp=1676883894~hmac=29d995ae7b86479b34404ac9818d5592a785475ac891a69956a8175144f5cdcc");
+    background-repeat:no-repeat;
+    background-size:cover;
+    
+  }
+  .container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  h2 {
+    font-size: 26px;
+    margin: 20px 0;
+    text-align: center;
+    
+  }
+  
+  li {
+    border-radius: 3px;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .table-header {
+    background-color: #95A5A6;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .table-row {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+  }
+  .col-1 {
+    flex-basis: 20%;
+    text-align: center;
+  }
+  .col-2 {
+    flex-basis: 20%;
+    text-align: center;
+
+  }
+  .col-3 {
+    flex-basis: 20%;
+    text-align: center;
+
+  }
+  .col-4 {
+    flex-basis: 20%;
+    text-align: center;
+
+  }
+  .col-5 {
+    flex-basis: 20%;
+    text-align: center;
+
+  }
+ .heading{
+   color:white;
+ }
